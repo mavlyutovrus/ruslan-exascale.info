@@ -1,0 +1,52 @@
+
+1.5.2  Sep  1 2013
+	
+	* Fixed line ending being stripped when decrypting.
+	
+	Thanks to JRobert for reporting the issue.
+
+
+1.5  Aug 19 2013
+
+	* Added support for elements with the 'contenteditable' attribute set.
+	
+	* Security fix to ensure no html is injected after decrypting...
+
+
+1.4  Aug 11 2013
+
+	* Fixed decryption over Facebook.
+
+	Thanks to gbuk2013 for reporting it.
+
+
+1.3  Jan 13 2012
+	
+	* Fixed an issue caused from some webmail services which sends the mails
+	  applying word-wrapping and thus the recipient was unable to decrypt
+	  the message.
+
+	Thanks to JF Mayer for reporting the issue.
+
+
+1.2  Jul 22 2011
+	
+	* Improved startup handling.
+	
+	* HTML/BODY elements with the designMode attribute set to "on" should work
+	  now as well, which are commonly used by certain web-mail clients and/or
+	  to send html-formatted messages.
+	
+	Thanks to Jennifer B. and Alexander L. for their help testing.
+
+
+1.1  Jun 13 2011
+	
+	* gContextMenu.target might be null...
+	
+	* Fixed Warning: assignment to undeclared variable ctrTxt
+
+
+1.0  Jun 1 2011
+
+	* First Public Release

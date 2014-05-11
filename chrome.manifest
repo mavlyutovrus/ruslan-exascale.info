@@ -1,0 +1,4 @@
+content	ecomm	chrome/content/
+content	ecomm	chrome/content/ contentaccessible=yes
+skin	ecomm	classic/1.0	chrome/skin/
+overlay chrome://browser/content/browser.xul chrome://ecomm/content/browser.xul

@@ -741,14 +741,18 @@ function decryptMessage(message, textContainer, recieverId) {
         var decrypt = new JSEncrypt();
         decrypt.setPrivateKey(privateKey);
         try {
-            message = decrypt.decrypt(message);
+            var decr = decrypt.decrypt(message);
+	    if (decr) {
+		message = decr;						
+	    }
         } catch (e) {
             seen[message] = 1;
             return message;
         }
     }
     if (message.indexOf("[key") == 0) {
-	var our = textContainer.parentNode.parentNode.className == "_kso fsm direction_ltr _55r0";
+	//window.alert("see key");
+	var our = textContainer.parentNode.parentNode.parentNode.parentNode.className.indexOf("_50kd") == -1;
 	if (our) {
             keysSentTo[recieverId] = 1;
 	    //if (recieverId == "https://www.facebook.com/i.love.ruslan") {

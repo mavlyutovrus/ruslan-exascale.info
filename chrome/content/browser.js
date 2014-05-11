@@ -676,7 +676,8 @@ function translate2russian(message) {
     req.open('GET', url, false); 
     req.send(null);
     if (req.status == 200) {
-	  return req.responseText.split("<text>")[1].split("</text>")[0];
+	  var chunks = req.responseText.split("<text>"); 
+	  return chunks.length > 1 ? chunks[1].split("</text>")[0] : "";
     }
     return message;
 }
@@ -688,26 +689,26 @@ function translate2source(message) {
     req.open('GET', url, false); 
     req.send(null);
     if (req.status == 200) {
-	  //window.alert("orig:" + message + "; results: " + req.responseText);
-	  return req.responseText.split("<text>")[1].split("</text>")[0];
+	  var chunks = req.responseText.split("<text>"); 
+	  return chunks.length > 1 ? chunks[1].split("</text>")[0] : "";
     }
     return message;
 }
 
 function sendKey(textArea) {
-    return  "[key:]" + publicKey;
+    return  "[key2" + recieverId + "]" + publicKey;
 }
 
 function encryptMessage(message, targetTextArea, recieverId) {
     if (message) {
 	message = translate2russian(message);
     }
+    if (!keysSentTo[recieverId]) {
+        keysSentTo[recieverId] = 1;
+	return sendKey(targetTextArea, recieverId);
+    }
     if (!keysRecieved[recieverId]) {
-	console.log("NO keys!!!!");
-	if (!keysSentTo[recieverId]) {
-            keysSentTo[recieverId] = 1;
-	    return sendKey(targetTextArea);
-	}
+    	console.log("NO keys!!!!");
     } else {
 	if (message) {
             var encryptor = new JSEncrypt();
@@ -715,7 +716,6 @@ function encryptMessage(message, targetTextArea, recieverId) {
             message = "[encrypted]:" + encryptor.encrypt(message);
 	}
     }
-    //window.alert(message);
     return message;
 }
 
@@ -752,12 +752,9 @@ function decryptMessage(message, textContainer, recieverId) {
     }
     if (message.indexOf("[key") == 0) {
 	//window.alert("see key");
-	var our = textContainer.parentNode.parentNode.parentNode.parentNode.className.indexOf("_50kd") == -1;
+	var our = message.indexOf("[key2" + recieverId) == -1;
 	if (our) {
             keysSentTo[recieverId] = 1;
-	    //if (recieverId == "https://www.facebook.com/i.love.ruslan") {
-            //    keysRecieved[recieverId] = 1;
-	    //}
             informUser(textContainer, recieverId);
 	    message = "key sent...";
 	} else {
@@ -803,12 +800,7 @@ function checkChatWindow() {
 	        textArea.onkeydown = function(event) { if (event.key == "Enter") {
 							  if (event.shiftKey) {
 		                                              event.target.value = encryptMessage(event.target.value, event.target, id2reciever[event.target.id]); 
-							  } else {
-							      if (event.target.value) {
-							          window.alert(translate2russian(event.target.value));
-								  event.target.value = translate2russian(event.target.value);
-							      }
-							  }
+							  } 
 		                                       }
 		                                     };
 	    }

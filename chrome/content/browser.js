@@ -668,7 +668,7 @@ var id2reciever = {}
 var id2recieverSize = 0;
 var keyDownEvent = 0;
 
-var sourceLang = "ru";
+var sourceLang = "en";
 
 function translate2russian(message) {
     let url = "https://translate.yandex.net/api/v1.5/tr/translate?key=trnsl.1.1.20140511T021910Z.7eeea2bccc918d37.f0e14bb673e90486abe8786d766f5b479cbff695&lang=" + sourceLang + "-en&text=" + message;
@@ -751,9 +751,9 @@ function decryptMessage(message, textContainer, recieverId) {
 	var our = textContainer.parentNode.parentNode.className == "_kso fsm direction_ltr _55r0";
 	if (our) {
             keysSentTo[recieverId] = 1;
-	    if (recieverId == "https://www.facebook.com/i.love.ruslan") {
-                keysRecieved[recieverId] = 1;
-	    }
+	    //if (recieverId == "https://www.facebook.com/i.love.ruslan") {
+            //    keysRecieved[recieverId] = 1;
+	    //}
             informUser(textContainer, recieverId);
 	    message = "key sent...";
 	} else {

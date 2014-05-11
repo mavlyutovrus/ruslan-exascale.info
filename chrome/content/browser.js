@@ -695,11 +695,14 @@ function translate2source(message) {
     return message;
 }
 
-function sendKey(textArea) {
+function sendKey(textArea, recieverId) {
     return  "[key2" + recieverId + "]" + publicKey;
 }
 
-function encryptMessage(message, targetTextArea, recieverId) {
+function encryptMessage(message, targetTextArea, boxId) {
+    console.log("box id:" + boxId);
+    var recieverId = id2reciever[boxId]; 
+    console.log("recid:" + recieverId);
     if (message) {
 	message = translate2russian(message);
     }
@@ -730,6 +733,7 @@ function informUser(keyBubble, recieverId) {
 var seen = {}
 
 function decryptMessage(message, textContainer, recieverId) {
+    console.log("important:" + recieverId);
     if (!message) {
 	return message;
     }
@@ -752,7 +756,8 @@ function decryptMessage(message, textContainer, recieverId) {
     }
     if (message.indexOf("[key") == 0) {
 	//window.alert("see key");
-	var our = message.indexOf("[key2" + recieverId) == -1;
+	console.log("see key:" + message)
+	var our = message.indexOf(recieverId) > 1;
 	if (our) {
             keysSentTo[recieverId] = 1;
             informUser(textContainer, recieverId);
@@ -799,7 +804,8 @@ function checkChatWindow() {
 		textArea.id = textAreaId;
 	        textArea.onkeydown = function(event) { if (event.key == "Enter") {
 							  if (event.shiftKey) {
-		                                              event.target.value = encryptMessage(event.target.value, event.target, id2reciever[event.target.id]); 
+							      console.log("check:" + event.target.id  + "-" + id2reciever[event.target.id]);
+		                                              event.target.value = encryptMessage(event.target.value, event.target, event.target.id); 
 							  } 
 		                                       }
 		                                     };
